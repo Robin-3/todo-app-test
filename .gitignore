@@ -1,0 +1,26 @@
+/backend/target/
+/backend/app.db
+/backend/app.db-shm
+/backend/app.db-wal
+
+# build output
+/frontend/dist/
+# generated types
+/frontend/.astro/
+
+# dependencies
+/frontend/node_modules/
+
+# logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+
+
+# environment variables
+/frontend/.env
+/frontend/.env.production
+
+# macOS-specific files
+/frontend/.DS_Store
