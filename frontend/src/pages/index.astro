@@ -1,0 +1,57 @@
+---
+import Todo from "@/components/Todo.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import TodoForm from "@/components/TodoForm.astro";
+
+import "../styles/global.css";
+
+export type Todo = {
+	id_todo: number;
+	id_creator: number;
+	status: "Open" | "Close";
+	title: string;
+}
+
+const todos = await fetch("http://localhost:3000/api/todos", {
+	method: 'GET',
+	mode: 'same-origin',
+	cache: 'no-cache',
+	headers: {
+		'Content-Type': 'application/json',
+		'X-Auth-Token': '123',
+	},
+}).then(resp => resp.json());
+
+const data: Todo[] = todos.data;
+---
+
+<html lang="en" data-theme="light">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+	  <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anek+Latin:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Todo App</title>
+	</head>
+	<body>
+		<header>
+			<h1>Todo</h1>
+			<ThemeToggle />
+		</header>
+		<TodoForm />
+		<div class="todos">{data.map(d => <Todo data={d} />)}</div>
+	</body>
+</html>
+
+<style>
+	.todos {
+		display: grid;
+		gap: var(--size-2);
+	}
+</style>

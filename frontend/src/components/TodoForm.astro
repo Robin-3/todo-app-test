@@ -1,0 +1,65 @@
+<form id="new-todo">
+  <button class="fake-checkbox"></button>
+  <input type="text" id="todo" name="new-todo" required />
+</form>
+
+<style>
+  form {
+    background-color: var(--color-bkg);
+    padding: var(--size-3);
+    border: none;
+    border-radius: var(--radius-2);
+    display: flex;
+    gap: var(--size-3);
+  }
+
+  input {
+    background-color: var(--color-bkg);
+    border: none;
+    border-radius: var(--radius-2);
+    transition: box-shadow 200ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:focus {
+      outline: 2px solid transparent;
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 2px var(--color-bkg), 0 0 0 4px var(--color-blue);
+    }
+  }
+  
+  .fake-checkbox {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-bkg);
+    border: 2px solid var(--color-neutral-1);
+  }
+</style>
+
+<script>
+  const $form = document.querySelector("#new-todo") as HTMLFormElement;
+
+  $form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData($form);
+
+    const newTodo = formData.get("new-todo");
+
+    const todos = await fetch("/api/todos", {
+    	method: 'POST',
+    	mode: 'same-origin',
+    	cache: 'no-cache',
+    	headers: {
+    		'Content-Type': 'application/json',
+    	},
+    	body: JSON.stringify({method: "POST", data: { title: newTodo }}),
+    });
+    
+    const data = await todos.json();
+
+    console.log(data);
+    document.getElementById("todo").value = "";
+  });
+</script>
