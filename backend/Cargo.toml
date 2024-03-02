@@ -1,0 +1,26 @@
+[package]
+name = "todomvc"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.36", features = ["full"] }
+futures = "0.3"
+thiserror = "1.0"
+# JSON libs
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0"
+# Web libs
+warp = "0.3"
+# DB Libs
+sqlx = { version = "0.7", features = [ "runtime-tokio", "tls-rustls", "sqlite" ] }
+
+[dev-dependencies]
+anyhow = "1.0"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
